@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import GlobalChart from "./components/GlobalChart";
 import HeaderInfos from "./components/HeaderInfos";
 import Table from "./components/Table";
+import ToTop from "./components/ToTop";
 import "./styles/index.scss";
 
 const App = () => {
@@ -17,6 +18,14 @@ const App = () => {
         setCoinsData(res.data);
       })
       .catch((err) => console.log(err));
+
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 145) {
+        document.querySelector(".table-header").classList.add("active");
+      } else {
+        document.querySelector(".table-header").classList.remove("active");
+      }
+    });
   }, []);
 
   return (
@@ -27,6 +36,7 @@ const App = () => {
           <GlobalChart coinsData={coinsData} />
         </header>
         <Table coinsData={coinsData} />
+        <ToTop />
       </div>
     </div>
   );
