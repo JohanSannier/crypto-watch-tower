@@ -7,10 +7,13 @@ const StarIcon = ({ coinId }) => {
     if (window.localStorage.coinList) {
       let favList = window.localStorage.coinList.split(",");
       if (favList.includes(coinId)) {
+        console.log(coinId);
         setLike(true);
+      } else {
+        setLike(false);
       }
     }
-  });
+  }, [coinId]);
 
   const idChecker = (id) => {
     let favList = null;
