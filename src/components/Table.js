@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import TableLine from "./TableLine";
 import ToTop from "./ToTop";
+import { useSelector } from "react-redux";
 
 const Table = ({ coinsData }) => {
+  const showStableCoins = useSelector((state) => state.showStable);
+  const showFavList = useSelector((state) => state.showFavList);
   const [rangeNumber, setRangeNumber] = useState(100);
   const [orderBy, setOrderBy] = useState("");
   const tableHeader = [
@@ -17,6 +20,34 @@ const Table = ({ coinsData }) => {
     "1a",
     "ATH",
   ];
+
+  const excludeCoin = (coin) => {
+    if (
+      coin === "usdt" ||
+      coin === "usdc" ||
+      coin === "busd" ||
+      coin === "dai" ||
+      coin === "ust" ||
+      coin === "mim" ||
+      coin === "tusd" ||
+      coin === "usdp" ||
+      coin === "usdn" ||
+      coin === "fei" ||
+      coin === "tribe" ||
+      coin === "gusd" ||
+      coin === "frax" ||
+      coin === "lusd" ||
+      coin === "husd" ||
+      coin === "ousd" ||
+      coin === "xsgd" ||
+      coin === "usdx" ||
+      coin === "eurs"
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  };
 
   return (
     <div className="table-container">
@@ -63,6 +94,26 @@ const Table = ({ coinsData }) => {
       {coinsData
         ?.slice(0, rangeNumber)
         // eslint-disable-next-line array-callback-return
+        .filter((coin) => {
+          if (showFavList) {
+            let list = window.localStorage.coinList.split(",");
+            if (list.includes(coin.id)) {
+              return coin;
+            }
+          } else {
+            return coin;
+          }
+        })
+        // eslint-disable-next-line array-callback-return
+        .filter((coin) => {
+          if (showStableCoins) {
+            return coin;
+          } else {
+            if (excludeCoin(coin.symbol)) {
+              return coin;
+            }
+          }
+        })
         .sort((a, b) => {
           switch (orderBy) {
             case "Prix":
