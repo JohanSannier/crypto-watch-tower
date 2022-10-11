@@ -275,3 +275,17 @@
   width: 15px;
   cursor: pointer;
 }
+
+.searchbar {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 20px;
+  background-color: $black1;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+  color: white;
+  text-align: center;
+  backdrop-filter: blur(3px);
+  border-bottom: 2px solid $color1;
+  outline: none;
+}

@@ -7,7 +7,8 @@ const Table = ({ coinsData }) => {
   const showStableCoins = useSelector((state) => state.showStable);
   const showFavList = useSelector((state) => state.showFavList);
   const [rangeNumber, setRangeNumber] = useState(100);
-  const [orderBy, setOrderBy] = useState("");
+  const [orderBy, setOrderBy] = useState("Market Cap");
+  const [input, setInput] = useState("");
   const tableHeader = [
     "Prix",
     "Market Cap",
@@ -51,6 +52,13 @@ const Table = ({ coinsData }) => {
 
   return (
     <div className="table-container">
+      <input
+        type="text"
+        placeholder="Recherche..."
+        className="searchbar"
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+      />
       <ul className="table-header">
         <div className="range-container">
           <span>
@@ -93,6 +101,20 @@ const Table = ({ coinsData }) => {
       </ul>
       {coinsData
         ?.slice(0, rangeNumber)
+        // eslint-disable-next-line array-callback-return
+        .filter((coin) => {
+          if (input.length !== 0) {
+            let formatedInput = input.toLowerCase();
+            if (
+              coin.name.toLowerCase().includes(formatedInput) ||
+              coin.symbol.toLowerCase().includes(formatedInput)
+            ) {
+              return coin;
+            }
+          } else {
+            return coin;
+          }
+        })
         // eslint-disable-next-line array-callback-return
         .filter((coin) => {
           if (showFavList) {
