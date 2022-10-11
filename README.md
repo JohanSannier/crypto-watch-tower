@@ -1,4 +1,8 @@
-# Crypto Watch Tower
+# Crypto Tracker
+
+Application créée avec React / Redux / Sass / Recharts
+
+# Données API
 
 Market data : `https://api.coingecko.com/api/v3/global`
 
